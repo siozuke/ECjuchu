@@ -225,6 +225,8 @@ public abstract class DaoKokyaku {
 	 */
 	abstract public Kokyaku insertData(Kokyaku data);
 
+//	abstract public Kokyaku insertData2(Kokyaku data);
+
 	/**
 	 * 同じメールアドレスが登録されていないかチェックする。
 	 * @param mail メールアドレス

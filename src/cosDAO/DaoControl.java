@@ -63,11 +63,28 @@ public class DaoControl {
 	 * @return 顧客情報
 	 */
 	public Kokyaku insertData(Kokyaku data) {
-		DaoKokyaku daoK = new DaoHoujin(con); //顧客Dao
+		DaoKokyaku daoK = null; //顧客Dao
+
+		String className = null;
+		className = data.getClassName();
+
+		if (className.equals("Houjin")) {
+			daoK = new DaoHoujin(con); //顧客Dao
+		} else if(className.equals("Kojin")) {
+			daoK = new DaoKojin(con); //顧客Dao
+		}
+
 		//引数のdataを渡して、テーブルにインサートする
 		data = daoK.insertData(data);
 		return data;
 	}
+
+//	public Kokyaku insertData2(Kokyaku data) {
+//		DaoKokyaku daoK = new DaoKojin(con); //顧客Dao
+//		//引数のdataを渡して、テーブルにインサートする
+//		data = daoK.insertData(data);
+//		return data;
+//	}
 
 	/**
 	 * 顧客情報を取得する。
@@ -80,7 +97,12 @@ public class DaoControl {
 			String kokyakuCD,
 			String password,
 			String className) {
-		DaoKokyaku daoK = new DaoHoujin(con); //顧客Dao
+		DaoKokyaku daoK = null;
+		if (className.equals("Houjin")) {
+			daoK = new DaoHoujin(con); //顧客Dao
+		}else if (className.equals("Kojin")) {
+			daoK = new DaoKojin(con); //顧客Dao
+		}
 		//引数の顧客コードとパスワードを渡して、テーブルからセレクトする
 		return daoK.selectData(kokyakuCD, password);
 	}

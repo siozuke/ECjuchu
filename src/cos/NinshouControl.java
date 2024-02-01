@@ -62,7 +62,9 @@ public class NinshouControl extends BaseControl {
 		//100000～399999→顧客法人
 		if (id >= 1 && id < 4) {
 			className = "Houjin";
-		} else {
+		} else if(id >= 4 && id < 9) {//400000～899999→顧客個人
+			className = "Kojin";
+		}else {
 			//上記以外はログオン失敗
 			//nullがセットされたdataをリターン
 			return data;

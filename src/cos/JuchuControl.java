@@ -66,6 +66,41 @@ public class JuchuControl extends BaseControl {
 		targetHoujin.put("システムエラー", "cosd155E.jsp");
 	}
 
+	/** 法人個人Jspマップテーブル（受注登録で使用するJSPページとコマンドのマッピング表） */
+	private Map<String, String> targetKojin;
+	{
+		targetKojin = new HashMap<>();
+		targetKojin.put("ログオン", "cosd1010.jsp");
+		targetKojin.put("検索", "cosd1020.jsp");
+		targetKojin.put("カートに入れる", "cosd1020.jsp");
+		targetKojin.put("カート内リスト", "cosd1030.jsp");
+		//*******ここから、ver1*******
+		targetKojin.put("詳細01", "cosd1040.jsp");
+		targetKojin.put("詳細02", "cosd1041.jsp");
+		//*******ここまで、ver1*******
+
+		//*******ここから、ver2*******
+		targetKojin.put("詳細03", "cosd1042.jsp"); //商品詳細説明画面・食品追加
+		targetKojin.put("詳細04", "cosd1043.jsp"); //商品詳細説明画面・AV追加
+		targetKojin.put("詳細05", "cosd1044.jsp"); //商品詳細説明画面・PC追加
+		//*******ここまで、ver2*******
+		targetKojin.put("ご注文手続きへ", "cosd1050.jsp");
+		targetKojin.put("ご購入を続ける", "cosd1010.jsp");
+		targetKojin.put("再計算", "cosd1030.jsp");
+		targetKojin.put("カート内ご注文リストへ戻る", "cosd1030.jsp");
+		targetKojin.put("お支払い・お届け先入力", "cosd1061.jsp" );
+		targetKojin.put("次へ", "cosd1070.jsp");
+		targetKojin.put("ご注文確認へ戻る", "cosd1050.jsp");
+		targetKojin.put("ご注文を確定する", "cosd1080.jsp");
+		targetKojin.put("お支払い方法・お届け先の入力へ戻る", "cosd1060.jsp");
+		targetKojin.put("戻る", "cosd1030.jsp");
+		targetKojin.put("トップページへ", "cosd1000.html");
+		targetKojin.put("ログオフ", "cosd1000.html");
+		targetKojin.put("引当エラー", "cosd151E.jsp");
+		targetKojin.put("与信エラー", "cosd152E.jsp");
+		targetKojin.put("システムエラー", "cosd155E.jsp");
+	}
+
 	/**
 	 * 引数なしコンストラクタ。
 	 * スーパークラスのコンストラクタを呼び出して、基本初期化処理を行う。
@@ -88,7 +123,18 @@ public class JuchuControl extends BaseControl {
 	public JuchuControl(Kokyaku kokyaku) {
 		//引数なしコンストラクタを呼び出してJspマップテーブルをセットする
 		this();
-		this.setTargetMap(targetHoujin);
+		int id = 0;
+		//顧客コードの先頭文字を取得して、法人の顧客コードか否かを判断して、
+		//クラス名をセットする
+		id = Integer.parseInt(kokyaku.getKokyakuCD().substring(0, 1));
+
+		//100000～399999→顧客法人
+				if (id >= 1 && id < 4) {
+					this.setTargetMap(targetHoujin);
+				} else if(id >= 4 && id < 9) {//400000～899999→顧客個人
+					this.setTargetMap(targetKojin);
+				}
+
 		//受注オブジェクトを作成する
 		data = new Juchu();
 		//受注データに引数の顧客をセットする

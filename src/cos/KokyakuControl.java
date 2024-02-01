@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cosDataPack.Houjin;
+import cosDataPack.Kojin;
 import cosDataPack.Kokyaku;
 
 /**
@@ -33,6 +34,16 @@ public class KokyakuControl extends BaseControl {
 		targetHoujin.put("ユーザー登録", "cosd1110.jsp");
 		targetHoujin.put("ユーザー登録エラー", "cosd153E.jsp");
 		targetHoujin.put("システムエラー", "cosd155E.jsp");
+	}
+	private Map<String, String> targetKojin;
+	{
+		targetKojin = new HashMap<>();
+		targetKojin.put("新規登録", "cosd1091.jsp");
+		targetKojin.put("次へ", "cosd1101.jsp" );
+		targetKojin.put("修正", "cosd1091.jsp");
+		targetKojin.put("ユーザー登録", "cosd1110.jsp");
+		targetKojin.put("ユーザー登録エラー", "cosd153E.jsp");
+		targetKojin.put("システムエラー", "cosd155E.jsp");
 	}
 	/** 県コードと県名のマッピング表 */
 	Map<String, String> kenMap = null;
@@ -67,7 +78,12 @@ public class KokyakuControl extends BaseControl {
 		//引数なしコンストラクタを呼び出してJSPマップテーブルをセットする
 		this();
 		//Jspマップテーブルをセットする
-		this.setTargetMap(targetHoujin);
+		if (className.equals("Houjin")) {
+			this.setTargetMap(targetHoujin);
+		}else if (className.equals("Kojin")) {
+			this.setTargetMap(targetKojin);
+		}
+
 		//クラス名を取得する
 		Class<?> clazz = Class.forName("cosDataPack." + className);
 		if (clazz != null) {
@@ -78,9 +94,25 @@ public class KokyakuControl extends BaseControl {
 					| InvocationTargetException | NoSuchMethodException | SecurityException e) {
 				e.printStackTrace();
 			}
-			//クラス名をセット
-			data.setClassName(className);
 		}
+		//クラス名をセット
+		data.setClassName(className);
+
+			//Jspマップテーブルをセットする
+//			this.setTargetMap(targetKojin);
+//			//クラス名を取得する
+//			Class<?> clazz2 = Class.forName("cosDataPack." + className);
+//			if (clazz2 != null) {
+//				//クラス名より顧客のインスタンスを生成
+//				try {
+//					this.data = (Kokyaku) clazz2.getDeclaredConstructor().newInstance();
+//				} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+//						| InvocationTargetException | NoSuchMethodException | SecurityException e2) {
+//					e2.printStackTrace();
+//				}
+//			//クラス名をセット
+//			data.setClassName(className);
+//		}
 	}
 
 	/**
@@ -172,6 +204,7 @@ public class KokyakuControl extends BaseControl {
 		 */
 		if (btn.equals("次へ")) {
 			String ken = null;
+			String className = null;
 			//”次へ”が押された場合、ユーザー情報入力画面から入力された情報を
 			// 顧客データにセットする
 			data.setKokyakuName((String) request.getParameter("kokyakuname"));
@@ -193,10 +226,21 @@ public class KokyakuControl extends BaseControl {
 			data.setFax3((String) request.getParameter("fax3"));
 			data.setMail((String) request.getParameter("mail1"));
 			data.setPassword((String) request.getParameter("password1"));
-			//法人固有データのセット
-			((Houjin) data).setGyoushu((String) request.getParameter("gyoushu"));
-			((Houjin) data).setTantouName((String) request.getParameter("tantouname"));
-			((Houjin) data).setTantoubusho((String) request.getParameter("tantoubusho"));
+
+			className = getData().getClassName();
+
+
+			if (className.equals("Houjin")) {
+				//法人固有データのセット
+				((Houjin) data).setGyoushu((String) request.getParameter("gyoushu"));
+				((Houjin) data).setTantouName((String) request.getParameter("tantouname"));
+				((Houjin) data).setTantoubusho((String) request.getParameter("tantoubusho"));
+			} else if(className.equals("Kojin")) {
+				//個人固有データのセット
+				((Kojin) data).setBirthday((String) request.getParameter("birthday"));
+			}
+
+
 		}
 		/*
 		 * ”ユーザー登録”が押されたとき
