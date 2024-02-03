@@ -2,7 +2,7 @@
 	pageEncoding="utf-8"%>
 <%@ page import="cosDataPack.Juchu"%>
 <%@ page import="cosDataPack.Kokyaku"%>
-<%@ page import="cosDataPack.Houjin"%>
+<%@ page import="cosDataPack.Kojin"%>
 <%@ page import="cos.JuchuControl"%>
 <%@ page import="java.util.Date"%>
 <%@ page import="java.util.Calendar"%>
@@ -15,7 +15,7 @@
 <%
 	//受注データ、顧客データの取得
 	Juchu juchu = juchucontrol.getData();
-	Houjin kokyaku = (Houjin) juchu.getKokyaku();
+	Kojin kokyaku = (Kojin) juchu.getKokyaku();
 	//金額類をカンマ編集する
 	String sJuchuKingaku = null; //カンマ編集後受注金額の文字列
 	String sTax = null; //カンマ編集後消費税の文字列
@@ -38,7 +38,7 @@
 <link rel="stylesheet" href="css/common1.css">
 <title>Office Goody</title>
 </head>
-<body id="cosd1070">
+<body id="cosd1071">
 	<!-- コンテナ部分（ページ全体） -->
 	<div id="container">
 		<!-- ヘッダー部分 -->
@@ -51,7 +51,7 @@
 			<form action="CosServlet" method="post">
 				<!-- コンテンツ内ヘッダー部分 -->
 				<div id="contents_header">
-					<p><small>COSD1070</small></p>
+					<p><small>COSD1071</small></p>
 					<h3>ご注文内容のご確認</h3>
 				</div>
 				<!-- コンテンツ内ナビゲーション部分 -->
@@ -70,12 +70,8 @@
 					<table>
 						<caption>次の内容でよろしければ、「ご注文を確定する」ボタンを押してください。</caption>
 						<tr>
-							<th colspan="2">会社名</th>
+							<th colspan="2">氏名</th>
 							<td><%=kokyaku.getKokyakuName() %>様</td>
-						<tr>
-							<th colspan="2">ご担当者名</th>
-							<td><%=kokyaku.getTantouName() %>様</td>
-						</tr>
 						<tr>
 							<th colspan="2">メールアドレス</th>
 							<td><%=kokyaku.getMail() %></td>

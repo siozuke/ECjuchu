@@ -52,9 +52,9 @@
 						<tr>
 							<th>お支払い方法</th>
 							<td colspan="2"><input type="radio" name="shiharaitype"
-								value="daikin" checked>&nbsp;&nbsp;代金引換</td>
+								value="1" checked>&nbsp;&nbsp;代金引換</td>
 							<td><input type="radio" name="shiharaitype"
-								value="kouza" checked>&nbsp;&nbsp;口座振込</td>
+								value="2" checked>&nbsp;&nbsp;口座振込</td>
 						</tr>
 						<tr>
 							<th>お届け先</th>

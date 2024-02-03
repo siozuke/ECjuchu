@@ -89,10 +89,10 @@ public class JuchuControl extends BaseControl {
 		targetKojin.put("再計算", "cosd1030.jsp");
 		targetKojin.put("カート内ご注文リストへ戻る", "cosd1030.jsp");
 		targetKojin.put("お支払い・お届け先入力", "cosd1061.jsp" );
-		targetKojin.put("次へ", "cosd1070.jsp");
+		targetKojin.put("次へ", "cosd1071.jsp");
 		targetKojin.put("ご注文確認へ戻る", "cosd1050.jsp");
 		targetKojin.put("ご注文を確定する", "cosd1080.jsp");
-		targetKojin.put("お支払い方法・お届け先の入力へ戻る", "cosd1060.jsp");
+		targetKojin.put("お支払い方法・お届け先の入力へ戻る", "cosd1061.jsp");
 		targetKojin.put("戻る", "cosd1030.jsp");
 		targetKojin.put("トップページへ", "cosd1000.html");
 		targetKojin.put("ログオフ", "cosd1000.html");
@@ -317,8 +317,17 @@ public class JuchuControl extends BaseControl {
 			//支払方法、お届け日、お届け時間帯をセットする
 			String nouhinBi = request.getParameter("nouhinyoteid");
 			String nouhinRange = request.getParameter("nouhinyoteirange");
+//			String className = request.getParameter("kokyaku");
 			data.setShiharaiType(Integer.parseInt(request.getParameter("shiharaitype")));
-			data.setShiharaiTypeS();
+			int ShiharaiType = data.getShiharaiType();
+
+			if (ShiharaiType == 0) {
+				data.setShiharaiTypeS();
+			}else if (ShiharaiType == 1) {
+				data.setShiharaiTypeS("代金引換");
+			}else {
+				data.setShiharaiTypeS("口座振込");
+			}
 			data.setNouhinYoteiD(nouhinBi);
 			data.setNouhinYoteiRange(nouhinRange);
 			//明細の納品予定日と納品予定時間帯をセットする
