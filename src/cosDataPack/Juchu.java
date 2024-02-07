@@ -106,6 +106,14 @@ public class Juchu {
 		return totalKingaku;
 	}
 
+	public int getHoujinKingaku() {
+		return (int)(totalKingaku * 0.9);
+	}
+
+	public int getKoujinKingaku() {
+		return (int)(totalKingaku * 0.5);
+	}
+
 	/**
 	 * 受注総金額を設定する。
 	 * @param totalKingaku 受注総金額

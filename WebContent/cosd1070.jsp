@@ -22,13 +22,23 @@
 	String sTotal = null; //カンマ編集後合計金額の文字列
 	DecimalFormat nf = new DecimalFormat("###,###,###"); //カンマ編集用クラス
 	try {
-		//受注金額の編集
-		sJuchuKingaku = nf.format(juchu.getTotalKingaku());
-		//消費税の編集
-		sTax = nf.format((int) (juchu.getTotalKingaku() * juchu.getTaxRate()));
-		//合計金額の編集
-		sTotal = nf.format(juchu.getTotalKingaku() +
-				(int) (juchu.getTotalKingaku() * juchu.getTaxRate()));
+		if (juchu.getTotalKingaku() >= 300000) {
+			//受注金額の編集
+			sJuchuKingaku = nf.format(juchu.getHoujinKingaku());
+			//消費税の編集
+			sTax = nf.format((int)(juchu.getHoujinKingaku() * juchu.getTaxRate()));
+			//合計金額の編集
+			sTotal = nf.format(juchu.getHoujinKingaku() +
+					(int)(juchu.getHoujinKingaku() * juchu.getTaxRate()));
+			}else {
+			//受注金額の編集
+			sJuchuKingaku = nf.format(juchu.getTotalKingaku());
+			//消費税の編集
+			sTax = nf.format((int) (juchu.getTotalKingaku() * juchu.getTaxRate()));
+			//合計金額の編集
+			sTotal = nf.format(juchu.getTotalKingaku() +
+						(int) (juchu.getTotalKingaku() * juchu.getTaxRate()));
+			}
 	} catch (IllegalArgumentException iae) {
 		System.out.println("IllegalArgumentException");
 	}

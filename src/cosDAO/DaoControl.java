@@ -79,12 +79,6 @@ public class DaoControl {
 		return data;
 	}
 
-//	public Kokyaku insertData2(Kokyaku data) {
-//		DaoKokyaku daoK = new DaoKojin(con); //顧客Dao
-//		//引数のdataを渡して、テーブルにインサートする
-//		data = daoK.insertData(data);
-//		return data;
-//	}
 
 	/**
 	 * 顧客情報を取得する。
